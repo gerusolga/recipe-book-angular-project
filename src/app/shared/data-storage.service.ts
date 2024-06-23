@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {RecipeService} from "../recipes/recipe.service";
 import {Recipe} from "../recipes/recipe.model";
 import {map, Observable, tap} from "rxjs";
+import {environment} from "../../environments/environment";
 
 
 @Injectable({
@@ -15,7 +16,7 @@ export class DataStorageService {
 
   storeRecipes() {
     const recipes = this.recipeService.getRecipes();
-    return this.http.put(`https://new-angular-project-2fd26-default-rtdb.europe-west1.firebasedatabase.app/recipes.json`, recipes)
+    return this.http.put(`${environment.firebaseConfig.databaseURL}/recipes.json`, recipes)
       .subscribe(response => {
         console.log(response);
       })
@@ -23,7 +24,7 @@ export class DataStorageService {
 
   fetchRecipes(): Observable<Recipe[]> {
     return this.http
-      .get<Recipe[]>(`https://new-angular-project-2fd26-default-rtdb.europe-west1.firebasedatabase.app/recipes.json`)
+      .get<Recipe[]>(`${environment.firebaseConfig.databaseURL}/recipes.json`)
       .pipe(
         tap(recipes => {
           console.log('Raw fetched recipes:', recipes); // Логирование всех загруженных рецептов

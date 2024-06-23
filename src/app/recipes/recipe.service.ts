@@ -5,6 +5,7 @@ import {Ingredient} from "../shared/ingredient.model";
 import {ShoppingListService} from "../shopping-list/shopping-list.service";
 import {HttpClient} from "@angular/common/http";
 import {AuthService} from "../auth/auth.service";
+import {environment} from "../../environments/environment";
 
 
 @Injectable({
@@ -47,7 +48,7 @@ export class RecipeService {
   }
 
   fetchRecipes() {
-    return this.http.get<Recipe[]>('https://new-angular-project-2fd26-default-rtdb.europe-west1.firebasedatabase.app/recipes.json')
+    return this.http.get<Recipe[]>(`${environment.firebaseConfig.databaseURL}/recipes.json`)
       .pipe(map(recipes => {
           return recipes.map(recipe => {
             return {
@@ -98,6 +99,6 @@ export class RecipeService {
     this.recipesChanged.next(this.recipes.slice());
   }
   saveRecipes() {
-    this.http.put('https://new-angular-project-2fd26-default-rtdb.europe-west1.firebasedatabase.app/recipes.json', this.recipes).subscribe();
+    this.http.put(`${environment.firebaseConfig.databaseURL}/recipes.json`, this.recipes).subscribe();
   }
 }

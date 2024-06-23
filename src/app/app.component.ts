@@ -8,7 +8,7 @@ import {AuthService} from "./auth/auth.service";
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
-
+  loading = true;
 
   constructor(
     private dataStorageService: DataStorageService,
@@ -20,11 +20,14 @@ export class AppComponent implements OnInit {
       if (user) {
         this.dataStorageService.fetchRecipes().subscribe(recipes => {
           console.log('Fetched recipes in app component:', recipes);
+          this.loading = false;
         }, error => {
           console.error('Error fetching recipes:', error);
+          this.loading = false;
         });
       } else {
         this.dataStorageService.clearRecipes();
+        this.loading = false;
       }
     });
     }

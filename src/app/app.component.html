@@ -1,5 +1,6 @@
+<div *ngIf="loading" id="global-spinner" class="spinner">Loading...</div>
 <app-header></app-header>
-<div class="container">
+<div class="container" *ngIf="!loading">
   <div class="row">
     <div class="col-md-12">
       <router-outlet></router-outlet>
