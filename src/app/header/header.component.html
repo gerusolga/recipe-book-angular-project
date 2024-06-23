@@ -10,10 +10,9 @@
         <li routerLinkActive="active"><a routerLink="/shopping-list">Shopping List</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a (click)="goHome()" style="cursor: pointer;">Home</a></li>
         <ng-template [ngIf]="!isAuthenticated">
-          <li><a routerLink="/signup">Register</a></li>
-          <li><a routerLink="/signin">Login</a></li>
+          <li><a routerLink="/register">Register</a></li>
+          <li><a routerLink="/login">Login</a></li>
         </ng-template>
 
         <li><a

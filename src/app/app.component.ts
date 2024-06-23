@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {DataStorageService} from "./shared/data-storage.service";
+import {AuthService} from "./auth/auth.service";
 
 @Component({
   selector: 'app-root',
@@ -7,20 +8,25 @@ import {DataStorageService} from "./shared/data-storage.service";
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
-  loadedFeature = 'recipe-book-angular-project';
 
-  constructor(private dataStorageService: DataStorageService) {}
+
+  constructor(
+    private dataStorageService: DataStorageService,
+    private authService: AuthService) {
+  }
 
   ngOnInit() {
-    const spinner = document.getElementById('global-spinner');
-    if (spinner) {
-      spinner.style.display = 'none';
-
-      this.dataStorageService.fetchRecipes();
+    this.authService.user.subscribe(user => {
+      if (user) {
+        this.dataStorageService.fetchRecipes().subscribe(recipes => {
+          console.log('Fetched recipes in app component:', recipes);
+        }, error => {
+          console.error('Error fetching recipes:', error);
+        });
+      } else {
+        this.dataStorageService.clearRecipes();
+      }
+    });
     }
-    }
-
-  onNavigate(feature: string) {
-    this.loadedFeature = feature;
   }
-}
+

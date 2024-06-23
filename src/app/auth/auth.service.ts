@@ -10,59 +10,36 @@ import {AngularFireAuth} from "@angular/fire/compat/auth";
 })
 
 export class AuthService {
-  user = new BehaviorSubject<User>(null);
+  user = new BehaviorSubject<User | null>(null);
 
-  constructor(private afAuth: AngularFireAuth, private router: Router) {}
+  constructor(private afAuth: AngularFireAuth, private router: Router) {
+    this.afAuth.authState.subscribe(user => {
+      if (user) {
+        user.getIdTokenResult().then(tokenResult => {
+          const loadedUser = new User(user.email, user.uid, tokenResult.token, new Date(tokenResult.expirationTime));
+          this.user.next(loadedUser);
+          console.log('Authenticated user:', loadedUser); // Логирование авторизованного пользователя
+        });
+      } else {
+        this.user.next(null);
+        console.log('No authenticated user'); // Логирование отсутствия авторизованного пользователя
+      }
+    });
+  }
 
   signUp(email: string, password: string) {
-    return this.afAuth.createUserWithEmailAndPassword(email, password).then(result => {
-      if (result.user) {
-        result.user.getIdTokenResult().then(tokenResult => {
-          this.handleAuthentication(
-            result.user.email,
-            result.user.uid,
-            tokenResult.token,
-            +tokenResult.expirationTime
-          );
-        });
-      }
-    }).catch(error => {
-      console.error(error);
-    });
+    return this.afAuth.createUserWithEmailAndPassword(email, password);
   }
 
   signIn(email: string, password: string) {
-    return this.afAuth.signInWithEmailAndPassword(email, password).then(result => {
-      if (result.user) {
-        result.user.getIdTokenResult().then(tokenResult => {
-          this.handleAuthentication(
-            result.user.email,
-            result.user.uid,
-            tokenResult.token,
-            +tokenResult.expirationTime
-          );
-        });
-      }
-    }).catch(error => {
-      console.error(error);
-    });
+    return this.afAuth.signInWithEmailAndPassword(email, password);
   }
 
-  private handleAuthentication(email: string, userId: string, token: string, expirationTime: number) {
-    const expirationDate = new Date(expirationTime * 1000);
-    const user = new User(email, userId, token, expirationDate);
-    this.user.next(user);
-    localStorage.setItem('userData', JSON.stringify(user));
-  }
 
   logout() {
     this.afAuth.signOut().then(() => {
       this.user.next(null);
-      return this.router.navigate(['/login']); // Обработка Promise
-    }).then(() => {
-      localStorage.removeItem('userData');
-    }).catch(error => {
-      console.error('Logout error:', error);
+      this.router.navigate(['/login']);
     });
   }
 }

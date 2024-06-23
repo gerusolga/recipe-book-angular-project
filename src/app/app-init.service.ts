@@ -9,7 +9,6 @@ export class AppInitService {
 
   init() {
     return new Promise<void>((resolve) => {
-      // Имитируем задержку загрузки
       setTimeout(() => {
         resolve();
       }, 3000);

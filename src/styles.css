@@ -9,9 +9,15 @@ body {
   min-height: 100%;
   text-rendering: optimizeLegibility;
   color: #666;
+  width: 100%;
+  height: 10px;
+  padding: 20px;
+  background: azure;
+  border: 20px solid rgba(255, 168, 244, 0.3);
+  background-size: contain;
 }
 
-p, ul, td, th, label {
+p, ul, label {
   font-size: 1em;
   line-height: 1.5em;
   margin: 0 0 1.5em;
@@ -21,12 +27,6 @@ textarea {
   overflow: auto;
   vertical-align: top
 }
-
-
-button, input, select, textarea {
-  vertical-align: baseline;
-}
-
 
 button, input {
   line-height: normal;
@@ -38,91 +38,14 @@ button, input[type="button"], input[type="submit"] {
   -webkit-appearance: button
 }
 
-input[type="checkbox"], input[type="radio"] {
-  box-sizing: border-box
-}
-
-input[type="search"] {
-  -webkit-appearance: textfield;
-  -moz-box-sizing: content-box;
-  -webkit-box-sizing: content-box;
-  box-sizing: content-box
-}
-
-input[type="search"]::-webkit-search-decoration {
-  -webkit-appearance: none
-}
-
-button::-moz-focus-inner, input::-moz-focus-inner {
-  border: 0;
-  padding: 0
-}
-
-a {
-  text-decoration: none;
-  color: #E74C3C;
-  -webkit-transition: color 0.1s linear, border 0.1s linear, opacity 0.1s linear, background-color 0.1s linear;
-  -moz-transition: color 0.1s linear, border 0.1s linear, opacity 0.1s linear, background-color 0.1s linear;
-  -ms-transition: color 0.1s linear, border 0.1s linear, opacity 0.1s linear, background-color 0.1s linear;
-  -o-transition: color 0.1s linear, border 0.1s linear, opacity 0.1s linear, background-color 0.1s linear;
-  transition: color 0.1s linear, border 0.1s linear, opacity 0.1s linear, background-color 0.1s linear;
-}
-
-
 h1 {
   font-weight: 600;
   margin: 0;
   text-shadow: 1px 1px 1px #000000;
-
-}
-
-h1 {
   font-size: 36px;
   line-height: 36px;
 }
 
-body {
-  width: 100%;
-  height: 10px;
-  padding: 20px;
-  background: azure ;
-  border: 20px solid rgba(255, 168, 244, 0.3);
-  background-size: contain;
-}
-
-
-/* ---------------------------------------------- /*
- * Preloader
-/* ---------------------------------------------- */
-
-#tt-preloader {
-  background: #FFF;
-  bottom: 0;
-  left: 0;
-  position: fixed;
-  right: 0;
-  top: 0;
-  z-index: 9999;
-}
-
-#pre-status,
-.preload-placeholder {
-  background: no-repeat center;
-  height: 200px;
-  left: 50%;
-  margin: -100px 0 0 -100px;
-  position: absolute;
-  top: 50%;
-  width: 200px;
-}
-
-.preload-placeholder {
-  background: none;
-  left: 0;
-  margin: 0;
-  text-align: center;
-  top: 65%;
-}
 #global-spinner {
   display: flex;
   justify-content: center;
@@ -136,13 +59,13 @@ body {
   z-index: 9999;
 }
 
-
 .lds-ring {
   display: inline-block;
   position: relative;
   width: 80px;
   height: 80px;
 }
+
 .lds-ring div {
   box-sizing: border-box;
   display: block;
@@ -150,20 +73,24 @@ body {
   width: 64px;
   height: 64px;
   margin: 8px;
-  border: 8px solid #cef;
   border-radius: 50%;
   animation: lds-ring 1.2s linear infinite;
+  border: 8px solid;
   border-color: #cef transparent transparent transparent;
 }
+
 .lds-ring div:nth-child(1) {
   animation-delay: -0.45s;
 }
+
 .lds-ring div:nth-child(2) {
   animation-delay: -0.3s;
 }
+
 .lds-ring div:nth-child(3) {
   animation-delay: -0.15s;
 }
+
 @keyframes lds-ring {
   0% {
     transform: rotate(0deg);

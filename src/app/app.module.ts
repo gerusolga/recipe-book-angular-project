@@ -11,8 +11,6 @@ import { RecipeStartComponent } from './recipes/recipe-start/recipe-start.compon
 import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 import { ShoppingEditComponent } from './shopping-list/shopping-edit/shopping-edit.component';
 import {RecipeItemComponent} from "./recipes/recipe-list/recipe-item/recipe-item.component";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-
 import {DropdownDirective} from "./shared/dropdown.directive";
 import {HttpClientModule} from "@angular/common/http";
 import {ShoppingListService} from "./shopping-list/shopping-list.service";
@@ -25,6 +23,7 @@ import {AngularFireModule} from "@angular/fire/compat";
 import {AngularFireAuthModule} from "@angular/fire/compat/auth";
 import {AuthModule} from "./auth/auth.module";
 import {AuthService} from "./auth/auth.service";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 
 export function initializeApp(appInitService: AppInitService) {
@@ -51,12 +50,12 @@ export function initializeApp(appInitService: AppInitService) {
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule,
     HttpClientModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
+    AuthModule,
     ReactiveFormsModule,
-    AuthModule
+    FormsModule
   ],
   providers: [ShoppingListService,RecipeService,DataStorageService, AuthService,AppInitService,
     {
