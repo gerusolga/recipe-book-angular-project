@@ -57,7 +57,7 @@ export function initializeApp(appInitService: AppInitService) {
     ReactiveFormsModule,
     FormsModule
   ],
-  providers: [ShoppingListService,RecipeService,DataStorageService, AuthService,AppInitService,
+  providers: [ShoppingListService,RecipeService,DataStorageService,AuthService,AppInitService,
     {
       provide: APP_INITIALIZER,
       useFactory: initializeApp,

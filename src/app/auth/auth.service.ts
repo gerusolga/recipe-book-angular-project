@@ -13,16 +13,18 @@ export class AuthService {
   user = new BehaviorSubject<User | null>(null);
 
   constructor(private afAuth: AngularFireAuth, private router: Router) {
+    console.log('AuthService initialized');
+
     this.afAuth.authState.subscribe(user => {
       if (user) {
         user.getIdTokenResult().then(tokenResult => {
           const loadedUser = new User(user.email, user.uid, tokenResult.token, new Date(tokenResult.expirationTime));
           this.user.next(loadedUser);
-          console.log('Authenticated user:', loadedUser); // Логирование авторизованного пользователя
+          console.log('Authenticated user:', loadedUser);
         });
       } else {
         this.user.next(null);
-        console.log('No authenticated user'); // Логирование отсутствия авторизованного пользователя
+        console.log('No authenticated user');
       }
     });
   }
