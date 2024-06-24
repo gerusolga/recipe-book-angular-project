@@ -29,6 +29,7 @@ export class AppComponent implements OnInit {
           this.loading = false;
         });
       } else {
+        this.recipes = [];
         this.loading = false;
       }
       const spinner = document.getElementById('global-spinner');

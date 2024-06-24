@@ -6,6 +6,7 @@ import {ShoppingListService} from "../shopping-list/shopping-list.service";
 import {HttpClient} from "@angular/common/http";
 import {AuthService} from "../auth/auth.service";
 import {environment} from "../../environments/environment";
+import {DataStorageService} from "../shared/data-storage.service";
 
 
 @Injectable({
@@ -39,7 +40,8 @@ export class RecipeService {
   constructor(
     private http: HttpClient,
     private slService: ShoppingListService,
-    private authService: AuthService) {
+    private authService: AuthService,
+    private dataStorageService: DataStorageService) {
   }
 
   setRecipes(recipes: Recipe[]) {
@@ -48,25 +50,14 @@ export class RecipeService {
   }
 
   fetchRecipes() {
-    return this.http.get<Recipe[]>(`${environment.firebaseConfig.databaseURL}/recipes.json`)
-      .pipe(map(recipes => {
-          return recipes.map(recipe => {
-            return {
-              ...recipe,
-              ingredients: recipe.ingredients ? recipe.ingredients : []
-            };
-          });
-        }),
-        tap(recipes => {
-          const userId = this.authService.user.value?.id;
-          if (userId) {
-            const filteredRecipes = recipes.filter(recipe => recipe.userId === userId);
-            this.setRecipes(filteredRecipes);
-          } else {
-            this.setRecipes([]);
-          }
-        })
-      );
+    return this.dataStorageService.fetchRecipes().subscribe(
+      (recipes: Recipe[]) => {
+        this.recipes = recipes || []; // Возвращаем пустой массив, если рецепты null или undefined
+      },
+      error => {
+        console.error('Error fetching recipes:', error);
+      }
+    );
   }
 
   getRecipes() {
