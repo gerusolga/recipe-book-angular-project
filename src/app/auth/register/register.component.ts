@@ -43,7 +43,7 @@ export class RegisterComponent implements OnInit {
     }
     const {email, password} = this.registerForm.value;
     this.authService.signUp(email, password).then(() => {
-      return this.router.navigate(['/']); // Обработка Promise
+      return this.router.navigate(['/']);
     }).catch(error => {
       this.error = error.message;
     });
