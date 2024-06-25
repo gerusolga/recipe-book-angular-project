@@ -37,7 +37,6 @@ export class AuthService {
     return this.afAuth.signInWithEmailAndPassword(email, password);
   }
 
-
   logout() {
     this.afAuth.signOut().then(() => {
       this.user.next(null);

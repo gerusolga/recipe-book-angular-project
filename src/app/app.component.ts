@@ -37,6 +37,6 @@ export class AppComponent implements OnInit {
         spinner.style.display = 'none';
       }
     });
-    }
   }
+}
 

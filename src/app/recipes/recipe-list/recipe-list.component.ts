@@ -3,7 +3,7 @@ import {Subscription} from "rxjs";
 import {Router} from "@angular/router";
 import {Recipe} from "../recipe.model";
 import {RecipeService} from "../recipe.service";
-import {AuthService} from "../../auth/auth.service";
+
 
 @Component({
   selector: 'app-recipe-list',
@@ -25,15 +25,16 @@ export class RecipeListComponent implements OnInit, OnDestroy {
         console.log('Recipes in list component:', recipes);
       }
     );
-    this.recipeService.fetchRecipes().subscribe();
+    this.recipeService.fetchRecipes();
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
+
   onNewRecipe() {
     this.router.navigate(['/recipes/new']);
   }
-  }
+}
 
 

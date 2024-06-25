@@ -5,7 +5,8 @@ import {Injectable} from "@angular/core";
   providedIn: 'root'
 })
 export class AppInitService {
-  constructor() { }
+  constructor() {
+  }
 
   init() {
     return new Promise<void>((resolve) => {

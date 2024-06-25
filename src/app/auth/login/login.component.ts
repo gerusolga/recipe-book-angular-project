@@ -16,7 +16,8 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     console.log('LoginComponent initialized');
@@ -33,7 +34,7 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    const { email, password } = this.loginForm.value;
+    const {email, password} = this.loginForm.value;
     console.log(`Attempting to log in with email: ${email}`);
     this.authService.signIn(email, password).then(() => {
       console.log('Login successful');

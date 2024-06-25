@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {map, Subject, tap} from "rxjs";
+import {Subject} from "rxjs";
 import {Recipe} from "./recipe.model";
 import {Ingredient} from "../shared/ingredient.model";
 import {ShoppingListService} from "../shopping-list/shopping-list.service";
@@ -52,7 +52,7 @@ export class RecipeService {
   fetchRecipes() {
     return this.dataStorageService.fetchRecipes().subscribe(
       (recipes: Recipe[]) => {
-        this.recipes = recipes || []; // Возвращаем пустой массив, если рецепты null или undefined
+        this.setRecipes(recipes || []);
       },
       error => {
         console.error('Error fetching recipes:', error);
@@ -80,6 +80,7 @@ export class RecipeService {
       this.saveRecipes();
     }
   }
+
   updateRecipe(index: number, newRecipe: Recipe) {
     this.recipes[index] = newRecipe;
     this.recipesChanged.next(this.recipes.slice());
@@ -89,6 +90,7 @@ export class RecipeService {
     this.recipes.splice(index, 1);
     this.recipesChanged.next(this.recipes.slice());
   }
+
   saveRecipes() {
     this.http.put(`${environment.firebaseConfig.databaseURL}/recipes.json`, this.recipes).subscribe();
   }

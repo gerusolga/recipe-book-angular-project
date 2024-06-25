@@ -1,8 +1,7 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {RecipeService} from "../recipes/recipe.service";
 import {Recipe} from "../recipes/recipe.model";
-import {catchError, map, Observable, of, switchMap, tap} from "rxjs";
+import {catchError, map, Observable, of, switchMap} from "rxjs";
 import {environment} from "../../environments/environment";
 import {AuthService} from "../auth/auth.service";
 
@@ -11,19 +10,17 @@ import {AuthService} from "../auth/auth.service";
   providedIn: "root",
 })
 export class DataStorageService {
-  private baseUrl = `${environment.firebaseConfig.databaseURL}/recipes`;
+  private baseUrl = `${environment.firebaseConfig.databaseURL}/recipes.json`;
 
 
   constructor(private http: HttpClient,
-              private recipeService: RecipeService,
               private authService: AuthService,
   ) {
   }
 
-  storeRecipes() {
-    const recipes = this.recipeService.getRecipes();
+  storeRecipes(recipes: Recipe[]) {
     console.log(1, recipes);
-    return this.http.put(`${environment.firebaseConfig.databaseURL}/recipes.json`, recipes)
+    return this.http.put(`this.baseUrl`, recipes)
       .subscribe(response => {
         console.log(response);
       })

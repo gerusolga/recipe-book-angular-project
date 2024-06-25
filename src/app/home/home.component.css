@@ -3,9 +3,11 @@
   font: bold .9em/2 Arial, sans-serif;
   border: 1px solid #000;
 }
+
 p {
   margin: 30px 5px 10px;
 }
+
 .text-center {
   position: relative;
   min-height: 100px;

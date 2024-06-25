@@ -16,7 +16,8 @@ export class RegisterComponent implements OnInit {
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.registerForm = this.fb.group({
@@ -40,14 +41,14 @@ export class RegisterComponent implements OnInit {
     if (this.registerForm.invalid) {
       return;
     }
-    const { email, password } = this.registerForm.value;
+    const {email, password} = this.registerForm.value;
     this.authService.signUp(email, password).then(() => {
       return this.router.navigate(['/']); // Обработка Promise
     }).catch(error => {
       this.error = error.message;
     });
   }
-  }
+}
 
 
 
